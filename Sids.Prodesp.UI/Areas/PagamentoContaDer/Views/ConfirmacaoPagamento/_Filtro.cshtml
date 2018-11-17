@@ -1,0 +1,125 @@
+﻿@model Sids.Prodesp.UI.Areas.PagamentoContaDer.Models.ConfirmacaoPagamentoFiltroViewModel
+
+
+<div class="row">
+
+    <div class="col-sm-12 col-md-6 col-lg-6">
+        <div class="row">
+            <div class="col-sm-12 col-lg-4 col-md-4 form-group-sm">
+                @Html.LabelFor(x => x.IdTipoDocumento, new { @class = "control-label label-form-DER", id = "lblTipoDocumento", name = "lblTipoDocumento" })
+                @Html.DropDownListFor(x => x.IdTipoDocumento, (SelectList)ViewBag.DropdownTipoDocumentoCadastro, "Selecione", new { @class = "form-control", @id = "lstTipoDocumento", Name = "lstTipoDocumento" })
+            </div>
+            <div class="col-sm-12 col-lg-4 col-md-4 form-group-sm form-group has-feedback">
+                @Html.LabelFor(x => x.NumeroDocumento, new { @class = "control-label label-form-DER", id = "lblNumeroDocumento", name = "lblNumeroDocumento" })
+                @Html.TextBoxFor(x => x.NumeroDocumento, new { @class = "form-control", id = "NumeroDocumento", name = "NumeroDocumento", maxlengh = "19" })
+            </div>
+            <div class="col-sm-12 col-lg-4 col-md-4 form-group-sm form-group has-feedback">
+                @Html.LabelFor(x => x.NumeroConta, new { @class = "control-label label-form-DER", id = "lblNumeroConta", name = "lblNumeroConta" })
+                @Html.TextBoxFor(x => x.NumeroConta, new { @class = "form-control codConta", id = "NumeroConta", name = "NumeroConta" })
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12 col-md-6 col-lg-6">
+        <div class="row">
+            <div class="col-sm-12 col-lg-4 col-md-4 form-group-sm form-group has-feedback">
+                @Html.LabelFor(x => x.DataPreparacao, new { @class = "control-label label-form-DER", id = "lblDataInicial", name = "lblDataInicial" })
+                <div class="input-group-sm">
+                    @Html.TextBoxFor(x => x.DataPreparacao, new { @class = "form-control data datepicker data", id = "DataPreparacao", name = "SataPreparacao", placeholder = "__/__/____", autocomplete = "off" })
+                </div>
+            </div>
+            <div class="col-sm-12 col-lg-4 col-md-4 form-group-sm">
+                @Html.LabelFor(x => x.TipoPagamento, new { @class = "control-label label-form-DER", id = "lblTipoPagamento", name = "lblTipoPagamento" })
+                @Html.DropDownListFor(x => x.TipoPagamento, (SelectList)ViewBag.DropdownListTipoPagamento, "Selecione", new { @class = "form-control", @id = "lstTipoPagamento", Name = "lstTipoPagamento" })
+            </div>
+            <div class="col-sm-12 col-lg-4 col-md-4 form-group-sm form-group has-feedback">
+                @Html.LabelFor(x => x.Orgao, new { @class = "control-label label-form-DER", id = "lblOrgao", name = "lblOrgao" })
+                @Html.DropDownListFor(x => x.Orgao, (SelectList)ViewBag.DropdownListRegional, "Selecione", new { @class = "form-control", @id = "lstOrgao", Name = "lstOrgao" })
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12 col-md-6 col-lg-6">
+        <div class="row">
+            <div class="col-sm-12 col-lg-4 col-md-4 form-group-sm form-group has-feedback">
+                @Html.LabelFor(x => x.TipoDespesa, new { @class = "control-label label-form-DER", id = "lblTipoDespesa", name = "lblTipoDespesa" })
+                @Html.TextBoxFor(x => x.TipoDespesa, new { @class = "form-control tpDespesa", id = "TipoDespesa", name = "TipoDespesa", maxlenght = "19" })
+                @Html.ValidationMessageFor(x => x.TipoDespesa)
+            </div>
+            <div class="col-sm-12 col-lg-4 col-md-4 form-group-sm form-group has-feedback">
+                @Html.LabelFor(x => x.NumeroContrato, new { @class = "control-label label-form-DER", id = "lblNumeroContrato", name = "lblNumeroContrato" })
+                @Html.TextBoxFor(x => x.NumeroContrato, new { @class = "form-control contrato", id = "nContrato", name = "nContrato" })
+                @Html.ValidationMessageFor(x => x.NumeroContrato)
+            </div>
+            <div class="col-sm-12 col-lg-4 col-md-4 form-group-sm form-group has-feedback">
+                @Html.LabelFor(x => x.CodigoObra, new { @class = "control-label label-form-DER", id = "lblCodigoObra", name = "lblCodigoObra" })
+                @Html.TextBoxFor(x => x.CodigoObra, new { @class = "form-control unidGestObra", id = "codigoAplicacaoObra", name = "codigoAplicacaoObra", maxlengh = "5" })
+                @Html.ValidationMessageFor(x => x.CodigoObra)
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12 col-md-6 col-lg-6">
+        <div class="row">
+            <div class="col-sm-12 col-lg-4 col-md-4 form-group-sm">
+                @Html.LabelFor(x => x.Origem, new { @class = "control-label label-form-DER", id = "lblOrigemConfirmacao", name = "lblOrigemConfirmacao" })
+                @Html.DropDownListFor(x => x.Origem, (SelectList)ViewBag.DropdownListOrigemConfirmacao, "Selecione", new { @class = "form-control", @id = "lstOrigemConfirmacao", Name = "lstOrigemConfirmacao" })
+            </div>
+            <div class="col-sm-12 col-lg-4 col-md-4 form-group-sm form-group has-feedback">
+                @Html.LabelFor(x => x.NomeReduzidoCredor, new { @class = "control-label label-form-DER", id = "lblNomeReduzidoCredor", name = "lblNomeReduzidoCredor" })
+                @Html.TextBoxFor(x => x.NomeReduzidoCredor, new { @class = "form-control", id = "nomeReduzidoCredor", name = "nomeReduzidoCredor", maxlengh = "14" })
+                @Html.ValidationMessageFor(x => x.NomeReduzidoCredor)
+            </div>
+            <div class="col-sm-12 col-lg-4 col-md-4 form-group-sm form-group has-feedback">
+                @Html.LabelFor(x => x.CPF_CNPJ, new { @class = "control-label label-form-DER", id = "lblCPF_CNPJ", name = "lblCPF_CNPJ" })
+                @Html.TextBoxFor(x => x.CPF_CNPJ, new { @class = "form-control cnpjcpfUgCredor", id = "cpfCNPJCredor", name = "cpfCNPJCredor" })
+                @Html.ValidationMessageFor(x => x.CPF_CNPJ)
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12 col-lg-3 col-md-3 form-group-sm form-group has-feedback">
+        @Html.LabelFor(x => x.DataConfirmacao, new { @class = "control-label label-form-DER", id = "lblDataConfirmacao", name = "lblDataConfirmacao" })
+        <div class="input-group-sm">
+            @Html.TextBoxFor(x => x.DataConfirmacao, new { @class = "form-control data datepicker datade", id = "dataConfirmacao", name = "dataConfirmacao", placeholder = "__/__/____", autocomplete = "off" })
+        </div>
+    </div>
+    <div class="col-sm-12 col-lg-3 col-md-3 form-group-sm" style="padding-right:5pt;">
+        @Html.LabelFor(x => x.StatusProdesp, new { @class = "control-label label-form-DER", id = "lblStatusProdesp", name = "lblStatusProdesp" })
+        @Html.DropDownListFor(x => x.StatusProdesp, (SelectList)ViewBag.DropdownListStatusProdesp, "Selecione", new { @class = "form-control", @id = "lstStatusProdesp", Name = "lstStatusProdesp" })
+    </div>
+    <div class="col-sm-12 col-lg-3 col-md-3 form-group-sm form-group has-feedback">
+        @Html.LabelFor(x => x.DataCadastroDe, new { @class = "control-label label-form-DER", id = "lblDataCadastroDe", name = "lblDataCadastroDe" })
+        <div class="input-group-sm">
+
+            @Html.TextBoxFor(x => x.DataCadastroDe, new { @class = "form-control data datepicker data", id = "dataCadastroDe", name = "dataCadastroDe", placeholder = "__/__/____", autocomplete = "off" })
+        </div>
+    </div>
+    <div class="col-sm-12 col-lg-3 col-md-3 form-group-sm form-group has-feedback">
+        @Html.LabelFor(x => x.DataCadastroAte, new { @class = "control-label label-form-DER", id = "lblDataCadastroAte", name = "lblDataCadastroAte" })
+        <div class="input-group-sm">
+
+            @Html.TextBoxFor(x => x.DataCadastroAte, new { @class = "form-control data datepicker data", id = "dataCadastroAte", name = "dataCadastroAte", placeholder = "__/__/____", autocomplete = "off" })
+        </div>
+    </div>
+
+</div>
+
+<div class='row'>
+    <div class='col-sm-12 col-lg-12 col-md-12 form-group-sm'>
+    </div>
+</div>
+
+<div class='row'>
+    <div class='col-sm-12 col-lg-12 col-md-12 form-group-sm'>
+        <button type='button' id='btnPesquisar' class='btn-sm btn btn-primary' onclick="ValidaFormulario();"><i class='glyphicon glyphicon-search'></i> Pesquisar</button>
+        <button type='button' id='Create' class='btn btn-sm btn-warning' onclick="javascript: window.location.href = '@Url.Action("Create")';"><i class='glyphicon glyphicon-plus'></i> Cadastrar</button>
+        <button type='button' id='btnLimpar' class='btn-sm btn btn-success' onclick='javascript: limparFormulario($("#form_filtro"));'><i class='glyphicon glyphicon-refresh'></i> Limpar</button>
+    </div>
+</div>
+
+<div class='row'>
+    <div class='col-sm-12 col-lg-12 col-md-12 form-group-sm'>
+    </div>
+</div>
+

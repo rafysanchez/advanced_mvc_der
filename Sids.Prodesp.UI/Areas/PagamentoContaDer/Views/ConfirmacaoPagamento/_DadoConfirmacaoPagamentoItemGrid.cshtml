@@ -1,0 +1,138 @@
+﻿@using Sids.Prodesp.UI.Areas.PagamentoContaDer.Models
+
+@model IEnumerable<ConfirmacaoPagamentoFiltroViewModel>
+
+
+@{
+    var controller = ViewContext.RouteData.GetRequiredString("controller");
+}
+
+<div class="row">
+    <div class="col-md-10">
+        <h3 class="margT0 tituloItensPagina">Resultado da Busca</h3>
+    </div>
+</div>
+
+<div class="row">&nbsp;</div>
+
+<div class="margT0">
+    <div class="row">
+        <div class="col-sm-12 col-lg-12 col-md-12" style="overflow: auto">
+            <form method="post" action=@Url.Content("~/PagamentoContaDer/" + controller + "/DownloadFile/") id="frmExport">
+                <table id="tblPesquisa" class="_tbDataTables table dataTable table-condensed table-striped small" style="border-collapse: collapse;">
+                    <thead>
+                        <tr>
+                            <th>@Html.LabelFor(x => x.FirstOrDefault().NumeroOP )</th>
+                            <th>@Html.LabelFor(x => x.FirstOrDefault().Orgao)</th>
+                            <th>@Html.LabelFor(x => x.FirstOrDefault().DespesaTipo)</th>
+                            <th>@Html.LabelFor(x => x.FirstOrDefault().NumeroDocumento)</th>
+                            <th>@Html.LabelFor(x => x.FirstOrDefault().NomeReduzidoCredor)</th>
+                            <th>@Html.LabelFor(x => x.FirstOrDefault().CPF_CNPJ_Credor)</th>
+                            <th>@Html.LabelFor(x => x.FirstOrDefault().ValorDesdobradoDecimal)</th>
+                            <th>@Html.LabelFor(x => x.FirstOrDefault().BancoFavorecido )</th>
+                            <th>@Html.LabelFor(x => x.FirstOrDefault().AgenciaFavorecido )</th>
+                            <th>@Html.LabelFor(x => x.FirstOrDefault().ContaFavorecido )</th>
+                            @*<th>@Html.LabelFor(x => x.FirstOrDefault().DataConfirmacao)</th>*@
+                            @*<th>@Html.LabelFor(x => x.FirstOrDefault().OrigemConfirmacao)</th>*@
+                            <th>@Html.LabelFor(x => x.FirstOrDefault().StatusTransmissaoConfirmacao)</th>
+                            <th>@Html.LabelFor(x => x.FirstOrDefault().NumeroBaixaRepasse)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.NumeroOP )</td>
+                                <td>@Html.DisplayFor(modelItem => item.Orgao)</td>
+                                <td>@Html.DisplayFor(modelItem => item.DespesaTipo )</td>
+                                <td>@Html.DisplayFor(modelItem => item.NumeroDocumento)</td>
+                                <td>@Html.DisplayFor(modelItem => item.NomeReduzidoCredor)</td>
+                                <td>@Html.DisplayFor(modelItem => item.CPF_CNPJ_Credor)</td>
+                                <td>@Html.DisplayFor(modelItem => item.ValorDesdobradoDecimal )</td>
+                                <td>@Html.DisplayFor(modelItem => item.BancoFavorecido )</td>
+                                <td>@Html.DisplayFor(modelItem => item.AgenciaFavorecido )</td>
+                                <td>@Html.DisplayFor(modelItem => item.ContaFavorecido )</td>
+                                @*<td>@Html.DisplayFor(modelItem => item.DataConfirmacaoTexto)</td>*@
+                                @*<td>@Html.DisplayFor(modelItem => item.OrigemConfirmacao)</td>*@
+                                @if (item.StatusProdesp == "S")
+                                {
+                                    <td class="textCenter"><i class="fa fa-check-circle fa-lg" style="color:green;" title="@item.MensagemServicoProdesp"></i></td>
+                                }
+                                else if (item.StatusProdesp == "E")
+                                {
+                                    <td class="textCenter"><i class="fa fa-exclamation-circle fa-lg" style="color:red;" title="@item.MensagemServicoProdesp"></i></td>
+                                }
+                                else
+                                {
+                                    <td class="textCenter"><i class="fa fa-exclamation-circle fa-lg" style="color:orange;" title="@item.MensagemServicoProdesp"></i></td>
+                                }
+                                <td>@Html.DisplayFor(modelItem => item.NumeroBaixaRepasse )</td>
+                            </tr>
+                        }
+                        @if (!Model.Any())
+                        {
+                            <tr class="text-center">
+                                <td colspan="18">Nenhum registro encontrado.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </form>
+            <div class="col-sm-12 col-lg-12 col-md-12" style="margin-bottom:15px;margin-left:-5px;">
+                <button class="btn btn-primary btn-sm pull-right" onclick="CONFIRMACAOPAGAMENTOCADASTRO.Modal.Mostrar('#modalVisualizarDetalhes')">Visualizar Detalhes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-sm-12 col-lg-12 col-md-12">
+    <h3 id="resultadoBusca">Valores a Confirmar Por Fonte</h3>
+    <div class="row">
+        <table id="tblTabelaListaValoresTotais" class="_tbDataTables table dataTable table-condensed table-striped small">
+            <thead>
+                <tr>
+                    <th>@Html.LabelFor(x => x.FirstOrDefault().Fonte)</th>
+                    <th>@Html.LabelFor(x => x.FirstOrDefault().ValorTotalConfirmarISSQN)</th>
+                    <th>@Html.LabelFor(x => x.FirstOrDefault().ValorTotalConfirmarIR)</th>
+                    <th>@Html.LabelFor(x => x.FirstOrDefault().ValorTotalConfirmar)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @*@foreach (var item in (ViewBag.Totais as IEnumerable<Sids.Prodesp.Model.Entity.PagamentoContaUnica.PagamentoDer.ConfirmacaoPagamentoTotais>))
+                {
+                    <tr class="text-center">
+                        <td>@item.NrFonteLista</td>
+                        <td>@item.VrTotalConfirmarISSQN</td>
+                        <td>@item.VrTotalConfirmarIR</td>
+                        <td>@item.VrTotalFonteLista</td>
+                    </tr>
+                }*@
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="row margT10">
+    <div class="col-sm-12 col-lg-2 col-md-2 form-group-sm">
+        @Html.LabelFor(x => x.FirstOrDefault().ValorTotalConfirmar, new { @class = "control-label label-form-DER", id = "ValorTotalConfirmadar", name = "ValorTotalConfirmadar", disabled = "disabled" })
+        @Html.TextBoxFor(x => x.FirstOrDefault().ValorTotalConfirmar, new { @class = "form-control", id = "ValorTotalConfirmar", name = "ValorTotalConfirmar", disabled = "disabled" })
+    </div>
+</div>
+<div class="row margT10">
+    <div class="col-sm-12 col-lg-2 col-md-2 form-group-sm">
+        @Html.LabelFor(x => x.FirstOrDefault().CodigoAgrupamentoConfirmacaoPagamento, new { @class = "control-label label-form-DER", id = "ValorTotalConfirmadar", name = "ValorTotalConfirmadar", disabled = "disabled" })
+        @Html.TextBoxFor(x => x.FirstOrDefault().CodigoAgrupamentoConfirmacaoPagamento, new { @class = "form-control", id = "CodigoAgrupamentoConfirmacaoPagamento", name = "CodigoAgrupamentoConfirmacaoPagamento", disabled = "disabled" })
+    </div>
+    <div class="col-sm-12 col-lg-3 col-md-3 form-group-sm">
+        @Html.LabelFor(x => x.FirstOrDefault().ValorTotalConfirmado, new { @class = "control-label label-form-DER", id = "ValorTotalConfirmado", name = "ValorTotalConfirmado", disabled = "disabled" })
+        @Html.TextBoxFor(x => x.FirstOrDefault().ValorTotalConfirmado, new { @class = "form-control", id = "ValorTotalConfirmado", name = "ValorTotalConfirmado", disabled = "disabled" })
+    </div>
+</div>
+
+
+@Html.Partial("_modalVisualizarDetalhes", Model.Where(x => !x.Totalizador).ToList())
+
+
+
+

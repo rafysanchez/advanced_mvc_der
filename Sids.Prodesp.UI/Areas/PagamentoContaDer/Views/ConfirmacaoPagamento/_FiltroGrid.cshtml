@@ -1,0 +1,110 @@
+﻿@using Sids.Prodesp.UI.Areas.PagamentoContaDer.Models
+
+@model IEnumerable<ConfirmacaoPagamentoFiltroViewModel>
+
+@{
+    var controller = ViewContext.RouteData.GetRequiredString("controller");
+    int i = 0;
+}
+
+<script>
+    var objExc = "ConfirmacaoPagamento";
+    var urld = '@Url.Action("Delete", "ConfirmacaoPagamento")';
+    var urla = "";
+
+    function Edit(id, editar) {
+
+        if (editar) {
+            AbrirModal("Confirmação de Pagamento transmitida com sucesso, não são permitidas alterarações após a transmissão.");
+            return false;
+        }
+
+        if (navigator.onLine != true) {
+            AbrirModal("Erro de conexão");
+            return false;
+        }
+
+        AbrirDetalhe('@Url.Action("Edit")' + '?id=' + id + '&tipo=a');
+    }
+</script>
+
+<div class="row">
+    <div class="col-md-10">
+        <h3 class="margT0 tituloItensPagina">Resultado da Busca</h3>
+    </div>
+</div>
+
+<div class="row">&nbsp;</div>
+
+<div class="margT0">
+    <div class="row">
+        <div class="col-sm-12 col-lg-12 col-md-12" style="overflow: auto">
+            <form method="post" action=@Url.Content("~/PagamentoContaDer/" + controller + "/DownloadFile/") id="frmExport">
+                <table id="tblPesquisa" class="_tbDataTables table dataTable table-condensed table-striped small" style="border-collapse: collapse;">
+                    <thead>
+                        <tr>
+                            <th>@Html.LabelFor(x => x.FirstOrDefault().CodigoAgrupamentoConfirmacaoPagamento)</th>
+                            <th>@Html.LabelFor(x => x.FirstOrDefault().Orgao)</th>
+                            <th>@Html.LabelFor(x => x.FirstOrDefault().DespesaTipo)</th>
+                            <th>@Html.LabelFor(x => x.FirstOrDefault().NumeroDocumento)</th>
+                            <th>@Html.LabelFor(x => x.FirstOrDefault().NomeReduzidoCredor)</th>
+                            <th>@Html.LabelFor(x => x.FirstOrDefault().CPF_CNPJ_Credor)</th>
+                            <th>@Html.LabelFor(x => x.FirstOrDefault().Valor)</th>
+                            <th>@Html.LabelFor(x => x.FirstOrDefault().DataConfirmacao)</th>
+                            <th>@Html.LabelFor(x => x.FirstOrDefault().OrigemConfirmacao)</th>
+                            <th>@Html.LabelFor(x => x.FirstOrDefault().StatusTransmissaoConfirmacao)</th>
+                            <th>@Html.LabelFor(x => x.FirstOrDefault().NumeroBaixaRepasse)</th>
+                            <th><label>Ações</label></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <input type="hidden" name="Items[@i].Id" value="@item.Id" />
+                                <td>@Html.DisplayFor(modelItem => item.CodigoAgrupamentoConfirmacaoPagamento)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Orgao)</td>
+                                <td>@Html.DisplayFor(modelItem => item.DespesaTipo)</td>
+                                <td>@Html.DisplayFor(modelItem => item.NumeroDocumento)</td>
+                                <td>@Html.DisplayFor(modelItem => item.NomeReduzidoCredor)</td>
+                                <td>@Html.DisplayFor(modelItem => item.CPF_CNPJ_Credor)</td>
+                                <td>@Html.DisplayFor(modelItem => item.ValorDocumentoDecimal)</td>
+                                <td>@Html.DisplayFor(modelItem => item.DataConfirmacaoTexto)</td>
+                                <td>@Html.DisplayFor(modelItem => item.OrigemConfirmacao)</td>
+                                @if (item.StatusProdesp == "S")
+                                {
+                                    <td class="textCenter"><i class="fa fa-check-circle fa-lg" style="color:green;" title="@item.MensagemServicoProdesp"></i></td>
+                                }
+                                else if (item.StatusProdesp == "E")
+                                {
+                                    <td class="textCenter"><i class="fa fa-exclamation-circle fa-lg" style="color:red;" title="@item.MensagemServicoProdesp"></i></td>
+                                }
+                                else
+                                {
+                                    <td class="textCenter"><i class="fa fa-exclamation-circle fa-lg" style="color:orange;" title="@item.MensagemServicoProdesp"></i></td>
+                                }
+                                <td>@Html.DisplayFor(modelItem => item.NumeroNLBaixaRepasse)</td>
+                                <td style='width: 100px;'>
+                                    @{ 
+                                        var disabledAlterar = item.StatusProdesp != "S" ? string.Empty : "disabled=disabled";
+                                        var disabledExcluir = item.StatusProdesp != "S" ? string.Empty : "disabled=disabled";
+                                    }
+                                    <button class="btn btn-xs btn-primary margL7" type="button" data-button="Visualizar" title="Visualizar" data-id-mov="@item.Id" title="Visualizar"><i class="fa fa-search"></i></button>
+                                    <button class="btn btn-xs btn-info margL7" type="button" hidden="hidden" data-button="Editar" data-id-mov="@item.Id" title="Alterar" @disabledAlterar><i class="fa fa-edit"></i></button>
+                                    <button class="btn btn-xs btn-danger margL7" type="button" data-button="Excluir" data-id-mov="@item.Id" name="@item.Id" title="Excluir" @disabledExcluir><i class="fa fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            i++;
+                        }
+                        @if (!Model.Any())
+                        {
+                            <tr class="text-center">
+                                <td colspan="18">Nenhum registro encontrado.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
